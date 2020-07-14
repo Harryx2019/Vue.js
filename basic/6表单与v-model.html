@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <textarea v-model="text" placeholder="输入..."></textarea>
+        <p>输入的内容是：</p>
+        <p style="white-space: pre;">{{text}}</p>
+    </div>
+    <!--单选按钮-->
+    <div id="app2">
+        <input type="radio" v-model="picked" value="html" id="html">
+        <!-- for属性的值必须是与label标签在同一文档中的可标记表单元素的id -->
+        <label for="html">HTML</label>
+        <br>
+        <input type="radio" v-model="picked" value="js" id="js">
+        <label for="js">JavaScript</label>
+        <br>
+        <input type="radio" v-model="picked" value="css" id="css">
+        <label for="css">CSS</label>
+    </div>
+    <br>
+    <!-- 复选框 -->
+    <div id="app3">
+        <input type="checkbox" v-model="checked" value="html" id="html">
+        <!-- for属性的值必须是与label标签在同一文档中的可标记表单元素的id -->
+        <label for="html">HTML</label>
+        <br>
+        <input type="checkbox" v-model="checked" value="js" id="js">
+        <label for="js">JavaScript</label>
+        <br>
+        <input type="checkbox" v-model="checked" value="css" id="css">
+        <label for="css">CSS</label>
+        <br>
+        <p>选择的项是: {{checked}}</p>
+    </div>
+    <!-- 选择列表 -->
+    <div id="app4">
+        <select v-model="selected">
+            <option 
+              v-for="option in options"
+              :value="option.value">{{option.text}}</option>
+        </select>
+        <p>选择的项是：{{selected}}</p>
+    </div>
+    <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+    <script>
+        var app = new Vue({
+            el :'#app',
+            data:{
+                text :''
+            }
+        });
+        var app2 = new Vue({
+            el: '#app2',
+            data:{
+                picked: 'js'
+            }
+        });
+        var app3 = new Vue({
+            el :'#app3',
+            data:{
+                checked :['html','css']
+            }
+        });
+        var app4 = new Vue({
+            el: '#app4',
+            data:{
+                selected:'html',
+                options:[
+                    {
+                        text:'HTML',
+                        value:'html'
+                    },
+                    {
+                        text:'JavaScript',
+                        value:'js'
+                    },
+                    {
+                        text:'CSS',
+                        value:'css'
+                    }
+                ]
+            }
+        })
+    </script>
+</body>
+</html>

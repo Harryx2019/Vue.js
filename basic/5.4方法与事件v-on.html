@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        点击次数：{{counter}}
+        <button @click="handleAdd()">+ 1</button>
+        <button @click="handleAdd(10)">+ 10</button>
+    </div>
+    <!-- 访问原生事件 -->
+    <div id="app2">
+        <a href="http://www.apple.com" @click="handleClick('禁止打开',$event)">打开链接</a>
+    </div>
+    <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+    <script>
+        var app=new Vue({
+            el : '#app',
+            data: {
+                counter: 0
+            },
+            methods:{
+                handleAdd: function(count){
+                    console.log(count);
+                    count= count||1;
+                    this.counter += count;
+                }
+            }
+        });
+        var app2=new Vue({
+            el: '#app2',
+            methods:{
+                handleClick: function(message,event){
+                    event.preventDefault();
+                    window.alert(message);
+                }
+            }
+        })
+    </script>
+</body>
+</html>

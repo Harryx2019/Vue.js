@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <ul>
+            <li v-for="(book,index) in books">{{index}}-{{book.name}}</li>
+        </ul>
+    </div>
+    <div id="app2">
+        <ul>
+            <li v-for="(value,key,index) in user">
+                {{index}}-{{key}}:{{value}}
+            </li>
+        </ul>
+    </div>
+    <!-- 数组更新 -->
+    <div id="app3">
+        <ul>
+            <template v-for="book in books">
+                <li>书名：{{book.name}}</li>
+                <li>作者：{{book.author}}</li>
+            </template>
+        </ul>
+    </div>
+    <!-- 过滤与排序 -->
+    <div id="app4">
+        <!-- <ul>
+            <template v-for="book in filterBooks">
+                <li>书名：{{book.name}}</li>
+                <li>作者：{{book.author}}</li>
+            </template>
+        </ul> -->
+        <ul>
+            <template v-for="book in sortedBooks">
+                <li>书名：{{book.name}}</li>
+                <li>作者：{{book.author}}</li>
+            </template>
+        </ul>
+    </div>
+    <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data:{
+                books: [
+                    {name:'《Vue.js实战》'},
+                    {name:'《JavaScript 语言精粹》'},
+                    {name:'《JavaScript 高级程序设计》'}
+                ]
+            }
+        })
+        //v-for遍历对象属性
+        var app2 = new Vue({
+            el: '#app2',
+            data:{
+                user:{
+                    name: 'Aresn',
+                    gender: '男',
+                    age: 26
+                }
+            }
+        })
+        
+        var app3=new Vue({
+            el: '#app3',
+            data:{
+                books:[
+                    {
+                        name:'《Vue.js实战》',
+                        author: '梁灏'
+                    },
+                    {
+                        name:'《JavaScript语言精粹》',
+                        author:'Douglas Crockford'
+                    },
+                    {
+                        name:'《JavaScript高级程序设计》',
+                        author:'Nicholas C.Zakas'
+                    }
+                ]
+            }
+        });
+        app3.books=app3.books.filter(function(item){
+            return item.name.match(/JavaScript/);
+        })
+        // Vue.set(app3.books,3,{
+        //     name:'《CSS揭秘》',
+        //     author:'[希] Lea Verou'
+        // })
+        app3.books.push({
+            name:'《CSS揭秘》',
+            author:'[希] Lea Verou'
+        });
+        app3.books.splice(1);
+
+        //过滤与排序
+        var app4=new Vue({
+            el: '#app4',
+            data:{
+                books:[
+                    {
+                        name:'《Vue.js实战》',
+                        author: '梁灏'
+                    },
+                    {
+                        name:'《JavaScript语言精粹》',
+                        author:'Douglas Crockford'
+                    },
+                    {
+                        name:'《JavaScript高级程序设计》',
+                        author:'Nicholas C.Zakas'
+                    }
+                ]
+            },
+            computed:{
+                //计算属性filterBooks依赖books，是不会修改books
+                // filterBooks: function(){
+                //     return this.books.filter(function(book){
+                //         return book.name.match(/JavaScript/);
+                //     })
+                // },
+                sortedBooks: function(){
+                    return this.books.sort(function(a,b){
+                        return a.name.length<b.name.length
+                    })
+                }
+            }
+        });
+    </script>
+</body>
+</html>

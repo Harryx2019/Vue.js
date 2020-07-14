@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        {{message}}
+        <my-component></my-component>
+    </div>
+    <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+    <script>
+        var bus = new Vue();
+
+        Vue.component('my-component',{
+            template:'<button @click="handleEvent">派发事件</button>',
+            methods:{
+                handleEvent:function(){
+                    bus.$emit('on-message','来自内部组件my-component的内容')
+                }
+            }
+        });
+        var app = new Vue({
+            el:'#app',
+            data:{
+                message:''
+            },
+            mounted:function(){
+                var _this=this;
+                //在实例初始化时，监听来自bus实例的事件
+                bus.$on('on-message',function(msg){
+                    _this.message = msg;
+                });
+            }
+        })
+    </script>
+</body>
+</html>
