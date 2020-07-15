@@ -4,7 +4,7 @@ Vue.component('pane',{
       <div class="pane" v-show="show">\
         <slot></slot>\
       </div>',
-    date:function(){
+    data:function(){
         return{
             show: true
         }
@@ -28,7 +28,7 @@ Vue.component('pane',{
             this.updateNav();
         }
     },
-    mouted(){
+    mounted(){
         this.updateNav();
     }
 })

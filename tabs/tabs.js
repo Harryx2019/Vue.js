@@ -3,7 +3,7 @@ Vue.component('tabs',{
         <div class="tabs">\
             <div class="tabs-bar">\
                 <div \
-                    :class="tabCls(item)\
+                    :class="tabCls(item)"\
                     v-for="(item,index) in navList"\
                     @click="handleChange(index)">\
                     {{item.label}}\
