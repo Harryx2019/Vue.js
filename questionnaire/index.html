@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>调查问卷WebAPP</title>
+    <link rel="stylesheet" href="style.css" type="text/css">
+</head>
+
+<body>
+    <div id="app" class="page" v-cloak>
+        <div v-if="page === 1">
+            <p>1.请问您的性别是：</p>
+            <input type="radio" v-model="picked" value="male" id="male">
+            <label for="male">男</label>
+            <input type="radio" v-model="picked" value="female" id="female">
+            <label for="female">女</label>
+            <input type="radio" v-model="picked" value="none" id="none">
+            <label for="none">保密</label>
+            <div class="bottom">
+                <next-step class="button" v-model="page"></next-step>
+                <reset class="button" v-model="picked" :page="page"></reset>
+            </div>
+        </div>
+        <div v-else-if="page === 2">
+            <p>2.请选择您的兴趣爱好：</p>
+            <input type="checkbox" v-model="checked" value="read" id="read">
+            <label for="read">看书</label>
+            <br>
+            <input type="checkbox" v-model="checked" value="swim" id="swim">
+            <label for="swim">游泳</label>
+            <br>
+            <input type="checkbox" v-model="checked" value="run" id="run">
+            <label for="run">跑步</label>
+            <br>
+            <input type="checkbox" v-model="checked" value="movie" id="movie">
+            <label for="movie">看电影</label>
+            <br>
+            <input type="checkbox" v-model="checked" value="music" id="music">
+            <label for="music">听音乐</label>
+            <br>
+            <div class="bottom">
+                <next-step class="button" v-model="page" :checked="checked"></next-step>
+                <pre-step class="button" v-model="page"></pre-step>
+                <reset class="button" v-model="checked" :page="page"></reset>
+            </div>
+        </div>
+        <div v-else-if="page===3">
+            <p>3.请介绍一下你自己：</p>
+            <textarea v-model="text" placeholder="不少于100字"></textarea>
+            <div class="bottom">
+                <next-step class="button" v-model="page" :text="text" @submit="submit"></next-step>
+                <pre-step class="button" v-model="page"></pre-step>
+                <reset class="button" v-model="text" :page="page"></reset>
+            </div>
+        </div>
+        <div v-else>
+            <p>感谢您的填写！祝您生活愉快！</p>
+        </div>
+    </div>
+    <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+    <script src="index.js"></script>
+</body>
+
+</html>
