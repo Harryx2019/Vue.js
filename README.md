@@ -8,3 +8,5 @@ Vue.js框架学习
 ### input-number:实战：开发一个数字输入框组件
 ### tabs:实战：开发一个标签页组件
 ### drop-down-menu:实战：开发一个可从外部关闭的下拉菜单
+### v-time:实战：开发一个实时时间转换指令v-time
+### questionnaire:项目：调查问卷WebApp
