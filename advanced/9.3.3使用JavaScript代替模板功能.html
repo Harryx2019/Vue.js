@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app1">
+        <ele1 :show="show"></ele1>
+        <button @click="show = !show">切换 show</button>
+    </div>
+    <div id="app2">
+        <ele2 :list="list"></ele2>
+    </div>
+    <!-- if、else语句和数组map方法充分配合使用来渲染一个列表 -->
+    <div id="app3">
+        <ele3 :list="list"></ele3>
+        <button @click="handleClick">显示列表</button>
+    </div>
+    <!-- v-model对应的API -->
+    <div id="app4">
+        <ele4></ele4>
+    </div>
+    <!-- 模拟聊天发送内容 -->
+    <div id="app5">
+        <ele5></ele5>
+    </div>
+    <!-- slot 默认内容 -->
+    <div id="app6">
+        <ele6></ele6>
+        <ele6>
+            <p>slot的内容</p>
+        </ele6>
+    </div>
+    <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+    <script>
+        //v-if和v-else的实现
+        Vue.component('ele1', {
+            render: function (createElement) {
+                if (this.show) {
+                    return createElement('p', 'show的值为true');
+                } else {
+                    return createElement('p', 'show的值为false');
+                }
+            },
+            props: {
+                show: {
+                    type: Boolean,
+                    default: false
+                }
+            }
+        });
+        var app1 = new Vue({
+            el: '#app1',
+            data: {
+                show: false
+            }
+        });
+        //v-for用一个简单的for循环来实现
+        Vue.component('ele2', {
+            render: function (createElement) {
+                var nodes = [];
+                for (var i = 0; i < this.list.length; i++) {
+                    nodes.push(createElement('p', this.list[i]));
+                }
+                return createElement('div', nodes);
+            },
+            props: {
+                list: {
+                    type: Array
+                }
+            }
+        });
+        var app2 = new Vue({
+            el: '#app2',
+            data: {
+                list: [
+                    '《Vue.js实战》',
+                    '《JavaScript 语言精粹》',
+                    '《JavaScript 高级程序设计》'
+                ]
+            }
+        });
+        Vue.component('ele3', {
+            render: function (createElement) {
+                if (this.list.length) {
+                    return createElement('ul', this.list.map(function (item) {
+                        return createElement('li', item);
+                    }))
+                }
+            },
+            props: {
+                list: {
+                    type: Array,
+                    default: function () {
+                        return [];
+                    }
+                }
+            }
+        });
+        var app3 = new Vue({
+            el: '#app3',
+            data: {
+                list: []
+            },
+            methods: {
+                handleClick: function () {
+                    this.list = [
+                        '《Vue.js实战》',
+                        '《JavaScript 语言精粹》',
+                        '《JavaScript 高级程序设计》'
+                    ]
+                }
+            }
+        });
+        Vue.component('ele4', {
+            render: function (createElement) {
+                var _this = this;
+                return createElement('div', [
+                    createElement('input', {
+                        domProps: {
+                            value: this.value
+                        },
+                        on: {
+                            input: function (event) {
+                                _this.value = event.target.value
+                            }
+                        }
+                    }),
+                    createElement('p', 'value:' + this.value)
+                ])
+            },
+            data: function () {
+                return {
+                    value: ''
+                }
+            }
+        });
+        var app4 = new Vue({
+            el: '#app4'
+        });
+        Vue.component('ele5', {
+            render: function (createElement) {
+                var _this = this;
+                //渲染聊天内容列表
+                if (this.list.length) {
+                    var listNode = createElement('ul', this.list.map(function (item) {
+                        return createElement('li', item);
+                    }))
+                } else {
+                    var listNode = createElement('p', '暂无聊天内容');
+                }
+                return createElement('div', [
+                    listNode,
+                    createElement('input', {
+                        attrs: {
+                            placeholder: '输入内容，按回车键发送'
+                        },
+                        style: {
+                            width: '200px'
+                        },
+                        on: {
+                            keyup: function (event) {
+                                if (event.keyCode !== 13) return;
+                                _this.list.push(event.target.value);
+                                event.target.value = '';
+                            }
+                        }
+                    })
+                ])
+            },
+            data: function () {
+                return {
+                    value: '',
+                    list: []
+                }
+            }
+        });
+        var app5 = new Vue({
+            el: '#app5'
+        });
+        Vue.component('ele6',{
+            render: function(createElement){
+                if(this.$slots.default===undefined){
+                    return createElement('div','没有使用slot时显示的文本');
+                }else{
+                    return createElement('div',this.$slots.default);
+                }
+            }
+        });
+        var app6 = new Vue({
+            el:'#app6'
+        })
+    </script>
+</body>
+
+</html>

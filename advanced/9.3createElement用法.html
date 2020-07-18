@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <ele></ele>
+    </div>
+    <div id="app1">
+        <ele1></ele1>
+    </div>
+    <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+    <script>
+        //传统的template写法
+        Vue.component('ele',{
+            template:'\
+                <div id="element"\
+                :class="{show:show}"\
+                @click="handleClick">文本内容</div>',
+            data:function(){
+                return {
+                    show:true
+                }
+            },
+            methods:{
+                handleClick:function(){
+                    console.log('clicked!');
+                }
+            }
+        });
+        var app = new Vue({
+            el:'#app'
+        })
+        //使用Render改写后
+        Vue.component('ele1',{
+            render: function(createElement){
+                return createElement(
+                    'div',
+                    {
+                        class:{
+                            'show':this.show
+                        },
+                        attrs:{
+                            id: 'element'
+                        },
+                        on:{
+                            click:this.handleClick
+                        }
+                    },
+                    '文本内容'
+                )
+            },
+            data:function () {  
+                return {
+                    show:true
+                }
+            },
+            methods:{
+                handleClick:function(){
+                    console.log('clicked!');
+                }
+            }
+        });
+        var app1 = new Vue({
+            el:'#app1'
+        })
+    </script>
+</body>
+</html>
