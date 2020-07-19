@@ -7,17 +7,17 @@ var app = new Vue({
                 key: 'name'
             },
             {
-                titel:'年龄',
+                title:'年龄',
                 key:'age',
-                sortabel:true
+                sortable:true
             },
             {
-                titel:'出生日期',
+                title:'出生日期',
                 key:'birthday',
-                sortabel:true
+                sortable:true
             },
             {
-                titel:'地址',
+                title:'地址',
                 key:'address'
             }
         ],
@@ -47,5 +47,15 @@ var app = new Vue({
                 address:'深圳市南山区深南大道'
             }
         ]
+    },
+    methods:{
+        handleAddData: function () {  
+            this.data.push({
+                name:'刘小天',
+                age: 19,
+                birthday: '1998-05-30',
+                address:'北京市东城区东直门'
+            })
+        }
     }
 });
