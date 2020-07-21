@@ -6,7 +6,7 @@ var config = {
         main: './main'
     },
     output:{
-        path: path.resolve(__dirname,'./dist'),
+        path: path.join(__dirname,'./dist'),
         publicPath: '/dist/',
         filename: 'main.js'
     },
@@ -35,6 +35,10 @@ var config = {
                     use:'css-loader',
                     fallback:'style-loader'
                 })
+            },
+            {
+                test :/\.(gif|jpg|png|woff|svg|eot|ttf)\??.*$/,
+                loader: 'url-loader?limit=1024'
             }
         ]
     },
