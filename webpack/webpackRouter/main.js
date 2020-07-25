@@ -7,10 +7,15 @@ import Vuex from 'vuex';
 import App from './app.vue';
 
 import VueBus from './vue-bus';
+import ViewUI from 'view-design';
+
+import 'view-design/dist/styles/iview.css';
 
 Vue.use(VueRouter);
+Vue.use(ViewUI);
 Vue.use(Vuex);
 Vue.use(VueBus);
+
 
 const Routers = [{
         path: '/index',
